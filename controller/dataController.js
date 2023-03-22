@@ -8,19 +8,22 @@ const {  taskManager } = require('../validation/mongoSchema.js');
 const addData = async (req, res) => {
     const result = jwt.verify(req.headers.token, secretKey);
     const bodyData = req.body;
+    if(req.file){
+       bodyData.Image = req.file.path;
+    }
     bodyData.userID= result.id;
     try {
         await taskManager.create(bodyData);
-        return res.json("successfull addData");
+        return res.json({ "msg": "successfully addData" });
       } catch (err) {
         return res.status(400).json(err.message);
       }
   };
 
-  /* @desc api for showData
-@route GET  /showData
+  /* @desc api for showDataAll
+@route GET  /showDataAll
 @access Public */
-const showData = async (req, res) => {    
+const showDataAll = async (req, res) => {    
       const result  = jwt.verify(req.headers.token, secretKey);
     try {
         let userData = await taskManager.find({userID : result.id});
@@ -29,6 +32,18 @@ const showData = async (req, res) => {
         return res.json(err.message);
       }
   }; 
+
+  /* @desc api for showData
+@route GET  /showData
+@access Public */
+const showData = async (req, res) => {    
+  try {
+    let userData = await taskManager.findOne({_id : req.body._id});
+    return res.json(userData);
+  } catch (err) {
+    return res.json(err.message);
+  }
+}; 
 
     /* @desc api for deleteData
 @route GET  /deleteData
@@ -60,4 +75,4 @@ const updateData = async (req, res) => {
 };
 
 
-module.exports = { addData ,showData , deleteData , updateData} ;
+module.exports = { addData , showDataAll , showData ,deleteData , updateData} ;

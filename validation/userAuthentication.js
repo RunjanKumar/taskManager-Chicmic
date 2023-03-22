@@ -4,6 +4,7 @@ const { User} = require('./mongoSchema.js');
 
 const userValidation = async (req, res, next) => {
   try {
+    /* check the token in request  header */
     if (!req.headers.token) {
       return res.status(401).json({ msg : "please provide a valid token"});
     }

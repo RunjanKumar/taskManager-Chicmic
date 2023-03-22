@@ -18,7 +18,11 @@ const signup = async (req, res) => {
     let user = await User.create(bodyData);
     let createToken = jwt.sign({ id: user._id.toString()}, secretKey);
     await User.findOneAndUpdate({email : bodyData.email , name : bodyData.name} ,{$set : {token : createToken}});
-    return res.json({msg : "Successfully signup"});
+    return res.json({
+    "msg" : "Successfully signup" , 
+    "statuscode": "200",
+    "name" : bodyData.name,
+    "token": createToken  });
   } catch (err) {
     return res.status(400).json({Error : err.message});
   }
@@ -40,7 +44,11 @@ const login = async (req, res) => {
   }
   let createToken = jwt.sign({ id: check._id.toString()}, secretKey);
   await User.findOneAndUpdate({ email: bodyData.email , name : bodyData.name } , {$set : {token : createToken}},{new :true});
-  return res.json({msg : "Successfully login" , token : createToken});
+  return res.json({
+    "msg" : "Successfully login" , 
+    "statuscode": "200",
+    "name" : bodyData.name,
+    "token": createToken  });
 };
 /* @desc api for update
 @route PATCH  /update

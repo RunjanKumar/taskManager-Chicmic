@@ -2,10 +2,12 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const port = process.env.PORT || 8001;
+
 const dataRouter = require('./router/dataRoute.js');
 const userRouter = require('./router/userRoute.js');
 
-const port = process.env.PORT || 8001;
+
 const app = express();
  
  const { userValidation }= require('./validation/userAuthentication.js');
@@ -22,5 +24,5 @@ app.use(cors());
 app.use('/user'  , userRouter );
 app.use('/data' , userValidation , dataRouter);
 
-
+/* Start the server */
 app.listen(port , () => console.log(`server is listening on ${port}`));

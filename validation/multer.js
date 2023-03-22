@@ -1,6 +1,6 @@
 const multer = require("multer");
+const path = require('path');
 
-// const uploads = multer({ dest : "./upload/pics"});
 
 /* storage engine */
 const storage = multer.diskStorage({
@@ -13,5 +13,6 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer({ storage: storage, limits: { fileSize: 1000000 } });
+
+const upload = multer({ storage: storage, limits: { fileSize: 100000 } });
 module.exports = { upload };

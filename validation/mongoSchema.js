@@ -22,6 +22,7 @@ const User = new mongoose.model("User", userSchema);
 /* creating the structure for storing data of addData  */
 const addDataSchemaMongoose = new mongoose.Schema(
     {
+      Image : String,
       userID : String,
       title: String,
       description: String,
