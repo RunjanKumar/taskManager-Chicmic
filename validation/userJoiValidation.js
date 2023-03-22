@@ -30,7 +30,7 @@ const signupSchema = joi.object({
 
 const signupValidate = ( req , res ,next) => {
   const result = signupSchema.validate(req.body);
-  if(result.error) res.send( { statusCode : 404 , msg : result.error.message});
+  if(result.error) res.josn( { statusCode : 404 , msg : result.error.message});
   else { 
     req.body = result.value; 
     next();
@@ -44,7 +44,7 @@ const loginSchema = joi.object({
 });
 const loginValidate = ( req , res ,next) => {
   const result = loginSchema.validate(req.body);
-  if(result.error) res.send( { statusCode : 404 , msg : result.error.message});
+  if(result.error) res.josn( { statusCode : 404 , msg : result.error.message});
   else {
     req.body = result.value;
     next();
@@ -61,7 +61,7 @@ const userUpdateSchema = joi.object({
 const userUpdateValidate = ( req , res ,next) => {
   const result = userUpdateSchema.validate(req.body);
   if(result.error) {
-    res.status(404).send( { statusCode : 404 , msg : result.error.message});
+    res.status(404).josn( { statusCode : 404 , msg : result.error.message});
   }
   else {
     next();
@@ -74,7 +74,7 @@ const generateOTPSchema = joi.object({
 const generateOTPValidate = (req , res, next) => {
   const result = generateOTPSchema.validate(req.body);
   if(result.error) {
-    res.status(404).send( { statusCode : 404 , msg : result.error.message});
+    res.status(404).josn( { statusCode : 404 , msg : result.error.message});
   }else{
     next() ;
   }
@@ -88,7 +88,7 @@ const forgetPasswordSchema = joi.object({
 const forgetPasswordValidate = (req , res , next) => {
   const result = forgetPasswordSchema.validate(req.body);
   if(result.error) {
-    res.status(404).send( { statusCode : 404 , msg : result.error.message});
+    res.status(404).josn( { statusCode : 404 , msg : result.error.message});
   }else{
     next() ;
   }

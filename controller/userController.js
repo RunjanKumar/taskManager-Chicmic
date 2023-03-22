@@ -9,7 +9,7 @@ const signup = async (req, res) => {
   /* checking email is duplicated or not */
   let check = await User.find({email : req.body.email});
   if(check.length){
-    return res.status(400).send({ msg : "email is also registered"});
+    return res.status(400).json({ msg : "email is also registered"});
   }
   req.body.password = hashPassword(req.body.password);
   const bodyData = req.body;
@@ -61,7 +61,7 @@ const update = async (req, res) => {
 const remove = async (req, res) => {
     const result = jwt.verify(req.headers.token , secretKey);
     await User.findOneAndDelete({_id : result.id});
-    return res.send("successfull delete");
+    return res.json("successfull delete");
   };
 
    /* @desc api for show

@@ -13,7 +13,7 @@ const addDataSchema = joi.object({
 const addDataValidate = ( req , res ,next) => {
   console.log(req.body);
   const result = addDataSchema.validate(req.body);
-  if(result.error) res.status(404).send( { statusCode : 404 , msg : result.error.message});
+  if(result.error) res.status(404).json( { statusCode : 404 , msg : result.error.message});
   else next();
 };
 
@@ -31,7 +31,7 @@ const updateDataSchema = joi.object({
   }).min(2);
   const updateDataValidate = ( req , res ,next) => {
     const result = updateDataSchema.validate(req.body);
-    if(result.error) res.status(404).send( { statusCode : 404 , msg : result.error.message});
+    if(result.error) res.status(404).json( { statusCode : 404 , msg : result.error.message});
     else next();
   };
 
@@ -41,7 +41,7 @@ const deleteDataSchema = joi.object({
 });
 const deleteDataValidate = ( req , res ,next) => {
   const result = deleteDataSchema.validate(req.body);
-  if(result.error) res.status(404).send( { statusCode : 404 , msg : result.error.message});
+  if(result.error) res.status(404).json( { statusCode : 404 , msg : result.error.message});
   else next();
 };
 

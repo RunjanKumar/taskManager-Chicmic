@@ -13,7 +13,7 @@ const addData = async (req, res) => {
         await taskManager.create(bodyData);
         return res.json("successfull addData");
       } catch (err) {
-        return res.status(400).send(err.message);
+        return res.status(400).json(err.message);
       }
   };
 
@@ -26,7 +26,7 @@ const showData = async (req, res) => {
         let userData = await taskManager.find({userID : result.id});
         return res.json(userData);
       } catch (err) {
-        return res.send(err.message);
+        return res.json(err.message);
       }
   }; 
 
@@ -38,7 +38,7 @@ const deleteData = async (req, res) => {
       let userData = await taskManager.deleteOne({_id : req.body._id});
       return res.json(userData);
     } catch (err) {
-      return res.send(err.message);
+      return res.json(err.message);
     }
 };
     /* @desc api for updateData
@@ -55,7 +55,7 @@ const updateData = async (req, res) => {
       let userData = await taskManager.findOneAndUpdate({_id : id} , { $set : req.body } , {new : true} );
       return res.json(userData);
     }catch (err) {
-      return res.send(err.message);
+      return res.json(err.message);
     } 
 };
 
