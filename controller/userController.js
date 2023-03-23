@@ -1,6 +1,6 @@
 const { hashPassword, secretKey , notValidEmail , notValidOTP} = require("../utils/common.js"); 
 const jwt = require("jsonwebtoken");
-const { User  } = require('../validation/mongoSchema.js');
+const { User  } = require('../model/mongoSchema.js');
 
 /* @desc api for signup
 @route POST /signup

@@ -28,28 +28,14 @@ const signupSchema = joi.object({
     phoneNumber: passwordComplexity(phoneOptions).required(),
 });
 
-const signupValidate = ( req , res ,next) => {
-  const result = signupSchema.validate(req.body);
-  if(result.error) res.json( { statusCode : 404 , msg : result.error.message});
-  else { 
-    req.body = result.value; 
-    next();
-   }
-};
+
 
 /* creating Schema for login and validate */
 const loginSchema = joi.object({
     email: joi.string().email({ tlds: { allow: ["com", "in"] } }).required().lowercase(),
     password: passwordComplexity(passwordOptions).required(),
 });
-const loginValidate = ( req , res ,next) => {
-  const result = loginSchema.validate(req.body);
-  if(result.error) res.json( { statusCode : 404 , msg : result.error.message});
-  else {
-    req.body = result.value;
-    next();
-  }
-};
+
 
 /* creating Schema for userUpdate and validate */
 const userUpdateSchema = joi.object({
@@ -58,46 +44,19 @@ const userUpdateSchema = joi.object({
     password: passwordComplexity(passwordOptions),
 }).min(1);
 
-const userUpdateValidate = ( req , res ,next) => {
-  const result = userUpdateSchema.validate(req.body);
-  if(result.error) {
-    res.status(404).json( { statusCode : 404 , msg : result.error.message});
-  }
-  else {
-    next();
-  }
-};
 
 const generateOTPSchema = joi.object({
     email : joi.string().required(),
 });
-const generateOTPValidate = (req , res, next) => {
-  const result = generateOTPSchema.validate(req.body);
-  if(result.error) {
-    res.status(404).json( { statusCode : 404 , msg : result.error.message});
-  }else{
-    next() ;
-  }
-};
+
 
 const forgetPasswordSchema = joi.object({
     OTP : joi.number().min(0).required(),
     password : passwordComplexity(passwordOptions).required(),
     email : joi.string().required(),
 });
-const forgetPasswordValidate = (req , res , next) => {
-  const result = forgetPasswordSchema.validate(req.body);
-  if(result.error) {
-    res.status(404).json( { statusCode : 404 , msg : result.error.message});
-  }else{
-    next() ;
-  }
-};
+
 
 module.exports = {
-    signupValidate,
-    loginValidate,
-    userUpdateValidate,
-    generateOTPValidate,
-    forgetPasswordValidate
+   signupSchema , loginSchema , userUpdateSchema , generateOTPSchema , forgetPasswordSchema 
   };

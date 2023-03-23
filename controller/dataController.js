@@ -1,7 +1,7 @@
 const { secretKey } = require("../utils/common.js");
 const jwt = require("jsonwebtoken");
 
-const {  taskManager } = require('../validation/mongoSchema.js');
+const {  taskManager } = require('../model/mongoSchema.js');
 /* @desc api for addData
 @route POST  /addData
 @access Public */
@@ -9,7 +9,7 @@ const addData = async (req, res) => {
     const result = jwt.verify(req.headers.token, secretKey);
     const bodyData = req.body;
     if(req.file){
-       bodyData.Image = req.file.path;
+       bodyData.image = req.file.path;
     }
     bodyData.userID= result.id;
     try {
@@ -39,7 +39,9 @@ const showDataAll = async (req, res) => {
 const showData = async (req, res) => {    
   try {
     let userData = await taskManager.findOne({_id : req.body._id});
-    return res.json(userData);
+    if(userData) return res.json(userData);
+    else return res.json({msg : "you have  no post"});
+    
   } catch (err) {
     return res.json(err.message);
   }
@@ -50,8 +52,13 @@ const showData = async (req, res) => {
 @access Public */
 const deleteData = async (req, res) => {  
   try {
-      let userData = await taskManager.deleteOne({_id : req.body._id});
-      return res.json(userData);
+    let _id =req.headers._id;
+      let userData = await taskManager.findOneAndDelete({_id : _id});
+      if(!userData){
+        return res.status(400).json({msg : "please provide a valid postid"});
+      }else{
+        return res.status(200).json({msg : "delete successfully"});
+      }
     } catch (err) {
       return res.json(err.message);
     }
@@ -67,6 +74,9 @@ const updateData = async (req, res) => {
       if(!check){
         return res.json({msg : "postid is invalid"});
       }
+      if(req.file){
+        req.body.Image = req.file.path;
+     }
       let userData = await taskManager.findOneAndUpdate({_id : id} , { $set : req.body } , {new : true} );
       return res.json(userData);
     }catch (err) {

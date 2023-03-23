@@ -9,8 +9,7 @@ const userRouter = require('./router/userRoute.js');
 
 
 const app = express();
- 
- const { userValidation }= require('./validation/userAuthentication.js');
+
 
 
 /* Connect to the database */
@@ -22,7 +21,7 @@ mongoose.connect('mongodb://localhost:27017/userDB')
 app.use(express.json());
 app.use(cors());
 app.use('/user'  , userRouter );
-app.use('/data' , userValidation , dataRouter);
+app.use('/data'  , dataRouter);
 
 /* Start the server */
 app.listen(port , () => console.log(`server is listening on ${port}`));

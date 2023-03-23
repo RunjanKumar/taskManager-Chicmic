@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const { secretKey } = require("../utils/common.js");
-const { User} = require('./mongoSchema.js');
+const { User} = require('../model/mongoSchema.js');
 
 const userValidation = async (req, res, next) => {
   try {

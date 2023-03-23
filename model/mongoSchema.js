@@ -22,13 +22,12 @@ const User = new mongoose.model("User", userSchema);
 /* creating the structure for storing data of addData  */
 const addDataSchemaMongoose = new mongoose.Schema(
     {
-      Image : String,
       userID : String,
       title: String,
       description: String,
       image : {
-        data: Buffer,
-        contentType: String
+        type : String,
+        default : "public/images-1679563231778.jpg"
     }, 
     category : String,
     startTime : Date ,
